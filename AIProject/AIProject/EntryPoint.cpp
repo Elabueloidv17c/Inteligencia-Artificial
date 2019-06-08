@@ -1,13 +1,15 @@
 #include "Headers.h"
-#include "Vector2.h"
-#include "Boid.h"
+#include "World.h"
 
-void main()
+#include <SFML/Graphics.hpp>
+#include <SFML/Window.hpp>
+
+int main()
 {
-	Boid Entity;
+	World instance;
 
-	Vector2 position(4.0f, 4.0f);
-	Vector2 danger(5.0f, 5.0f);
+	instance.Initialize(WindowData{ "IA Project" , 1280, 720, sf::Style::Default });
+	instance.Update();
 
-	Vector2 Final = Entity.Evade(position, 2, danger, 3, 1, 2);
+	return 0;
 }

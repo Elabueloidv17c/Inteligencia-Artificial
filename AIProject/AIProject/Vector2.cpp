@@ -1,4 +1,5 @@
 #include "Vector2.h"
+#include <math.h>
 
 Vector2::Vector2(float x, float y)
 {
@@ -19,8 +20,9 @@ Vector2::~Vector2()
 
 void Vector2::Normalize()
 {
-	x = x / Magnitude();
-	y = y / Magnitude();
+	float mag = Magnitude();
+	x = x / mag;
+	y = y / mag;
 }
 
 float Vector2::SqrtMagnitude()
@@ -30,13 +32,30 @@ float Vector2::SqrtMagnitude()
 
 float Vector2::Magnitude()
 {
-	float v = sqrt(SqrtMagnitude());
-	return v;
+	if(this->x != 0.0f && this->y != 0)
+	{ 
+		return sqrt(SqrtMagnitude());
+	}
+	
+	return 0;
 }
 
 float Vector2::Dot(const Vector2& other)
 {
 	return (x * other.x) + (y * other.y);
+}
+
+void Vector2::Truncated(float maxMagnitude)
+{
+	if (this->Magnitude() > maxMagnitude)
+	{
+		this->Normalize();
+		*this *= maxMagnitude;
+	}
+	else
+	{
+		*this;
+	}
 }
 
 float Vector2::Cross(const Vector2& other)
@@ -169,9 +188,29 @@ bool Vector2::operator == (const Vector2 & other) const
 	return false;
 }
 
+bool Vector2::operator==(const float & other) const
+{
+	if (x == other && y == other)
+	{
+		return true;
+	}
+
+	return false;
+}
+
 bool Vector2::operator != (const Vector2 & other) const
 {
 	if (x != other.x || y != other.y)
+	{
+		return true;
+	}
+
+	return false;
+}
+
+bool Vector2::operator!=(const float & other) const
+{
+	if (x != other || y != other)
 	{
 		return true;
 	}

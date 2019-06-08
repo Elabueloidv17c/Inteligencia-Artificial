@@ -1,5 +1,4 @@
 #pragma once
-#include "Headers.h"
 
 class Vector2
 {
@@ -15,12 +14,12 @@ public:
 	~Vector2();
 
 	//Methods
-
 	void Normalize();
 
 	float Cross(const Vector2& other);
 	float Dot(const Vector2& other);
-	
+	void Truncated(float maxMagnitude);
+
 	float SqrtMagnitude();
 	float Magnitude();
 
@@ -52,5 +51,8 @@ public:
 	Vector2 operator - () const;
 
 	bool operator == (const Vector2& other) const;
+	bool operator == (const float& other) const;
+
 	bool operator != (const Vector2& other) const;
+	bool operator != (const float& other) const;
 };
