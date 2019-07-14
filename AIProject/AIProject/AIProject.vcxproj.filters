@@ -13,27 +13,72 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Archivos de encabezado\Agents">
+      <UniqueIdentifier>{2a6f99b2-b4cc-4c08-b703-c51381372e0d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de encabezado\Map">
+      <UniqueIdentifier>{89e92437-2082-498c-85c1-31740f6291d3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de encabezado\Helpers">
+      <UniqueIdentifier>{8d1cb8d8-9173-4bf9-ae4d-5098a1b32e4f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de origen\Agents">
+      <UniqueIdentifier>{6f3fa8a1-99a6-4d7b-94d4-d872656ef137}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de origen\Map">
+      <UniqueIdentifier>{1d30fb1c-fc94-47d2-8d9c-bf4374986093}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de origen\Helpers">
+      <UniqueIdentifier>{da91bfe3-eb31-4a28-b0d9-7400e06413d3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="EntryPoint.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
-    <ClCompile Include="Boid.cpp">
-      <Filter>Archivos de origen</Filter>
+    <ClCompile Include="AgentManager.cpp">
+      <Filter>Archivos de origen\Agents</Filter>
     </ClCompile>
-    <ClCompile Include="Vector2.cpp">
-      <Filter>Archivos de origen</Filter>
+    <ClCompile Include="Boid.cpp">
+      <Filter>Archivos de origen\Agents</Filter>
+    </ClCompile>
+    <ClCompile Include="CircleObstacle.cpp">
+      <Filter>Archivos de origen\Map</Filter>
     </ClCompile>
     <ClCompile Include="Math.cpp">
-      <Filter>Archivos de origen</Filter>
+      <Filter>Archivos de origen\Helpers</Filter>
+    </ClCompile>
+    <ClCompile Include="Obstacle.cpp">
+      <Filter>Archivos de origen\Map</Filter>
+    </ClCompile>
+    <ClCompile Include="Path.cpp">
+      <Filter>Archivos de origen\Map</Filter>
     </ClCompile>
     <ClCompile Include="Timer.cpp">
-      <Filter>Archivos de origen</Filter>
+      <Filter>Archivos de origen\Helpers</Filter>
+    </ClCompile>
+    <ClCompile Include="PathNode.cpp">
+      <Filter>Archivos de origen\Map</Filter>
+    </ClCompile>
+    <ClCompile Include="Vector2.cpp">
+      <Filter>Archivos de origen\Helpers</Filter>
     </ClCompile>
     <ClCompile Include="World.cpp">
+      <Filter>Archivos de origen\Map</Filter>
+    </ClCompile>
+    <ClCompile Include="NodePlacer.cpp">
+      <Filter>Archivos de origen\Helpers</Filter>
+    </ClCompile>
+    <ClCompile Include="FSM.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
-    <ClCompile Include="AgentManager.cpp">
+    <ClCompile Include="BoidState.cpp">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
+    <ClCompile Include="RunState.cpp">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
+    <ClCompile Include="EndState.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
   </ItemGroup>
@@ -41,22 +86,49 @@
     <ClInclude Include="Headers.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
+    <ClInclude Include="AgentManager.h">
+      <Filter>Archivos de encabezado\Agents</Filter>
+    </ClInclude>
     <ClInclude Include="Boid.h">
-      <Filter>Archivos de encabezado</Filter>
+      <Filter>Archivos de encabezado\Agents</Filter>
     </ClInclude>
-    <ClInclude Include="Vector2.h">
-      <Filter>Archivos de encabezado</Filter>
+    <ClInclude Include="CircleObstacle.h">
+      <Filter>Archivos de encabezado\Map</Filter>
     </ClInclude>
-    <ClInclude Include="Math.h">
-      <Filter>Archivos de encabezado</Filter>
+    <ClInclude Include="Path.h">
+      <Filter>Archivos de encabezado\Map</Filter>
     </ClInclude>
-    <ClInclude Include="Timer.h">
-      <Filter>Archivos de encabezado</Filter>
+    <ClInclude Include="PathNode.h">
+      <Filter>Archivos de encabezado\Map</Filter>
+    </ClInclude>
+    <ClInclude Include="Obstacle.h">
+      <Filter>Archivos de encabezado\Map</Filter>
     </ClInclude>
     <ClInclude Include="World.h">
+      <Filter>Archivos de encabezado\Map</Filter>
+    </ClInclude>
+    <ClInclude Include="Timer.h">
+      <Filter>Archivos de encabezado\Helpers</Filter>
+    </ClInclude>
+    <ClInclude Include="Math.h">
+      <Filter>Archivos de encabezado\Helpers</Filter>
+    </ClInclude>
+    <ClInclude Include="Vector2.h">
+      <Filter>Archivos de encabezado\Helpers</Filter>
+    </ClInclude>
+    <ClInclude Include="NodePlacer.h">
+      <Filter>Archivos de encabezado\Helpers</Filter>
+    </ClInclude>
+    <ClInclude Include="FSM.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
-    <ClInclude Include="AgentManager.h">
+    <ClInclude Include="BoidState.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="RunState.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="EndState.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
   </ItemGroup>

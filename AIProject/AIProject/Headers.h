@@ -1,10 +1,12 @@
 #pragma once
+#define DEBUG
 
 //External dependences
 #include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>
 #include <stdlib.h>
 #include <iostream>
+#include <fstream>
 #include <time.h>  
 #include <chrono>
 
@@ -23,10 +25,12 @@ using sf::CircleShape;
 using sf::VideoMode;
 using sf::FloatRect;
 using sf::Vector2u;
+using sf::Vector2i;
 using sf::Vector2f;
 using sf::Texture;
 using sf::Sprite;
 using sf::Vertex;
+using sf::Color;
 using sf::Event;
 using sf::Font;
 using sf::Text;
@@ -35,34 +39,50 @@ using sf::View;
 //Structs
 struct WindowData
 {
-	string			name;
-	int				width;
-	int				heigh;
-	int				style;
+	string			
+  name;
+
+	int				
+  width,
+  heigh,
+  style;
 };
 
 struct AgentData
 {
-	string			texturePath;
-	Vector2			position;
-	Vector2			direction;
+	string			
+  texturePath;
+	
+  Vector2			
+  position, 
+  direction;
 
-	float			acceleration;
-	float			speed;
-	float			mass;
-	float			waitTime;
+	float
+	acceleration,
+	speed,
+	mass,
+	waitTime,
 
-	float			seekMagnitude;
-	float			fleeMagnitude;
-	float			arriveMagnitude;
-	float			pursueMagnitude;
-	float			evadeMagnitude;
-	float			wanderMagnitude;
-	float			wanderTMagnitude;
-	float			wanderRMagnitude;
+	seekMagnitude,
+	fleeMagnitude,
+	arriveMagnitude,
+	pursueMagnitude,
+	evadeMagnitude,
+	wanderMagnitude,
+	wanderTMagnitude,
+	wanderRMagnitude,
+	pathMagnitude,
+	courseCorrection,
+	flockMagnitude,
+	separationRadius,
+	separationMagnitude,
+	averageDirectionMagnitude,
+	cohesionMagnitude,
+	obstacleVision,
+	obstacleDetectionRadius,
+	obstacleAvoidanceMagnitude;
 };
 
-//Enums (This isn't in use yet)
 enum EBehaviour
 {
 	Seek = 1,
@@ -72,7 +92,10 @@ enum EBehaviour
 	Evade = 16,
 	Wander = 32,
 	WanderR = 64,
-	WanderT = 128
+	WanderT = 128,
+	End = 256,
+	Run = 512,
+	Idle = 1024
 };
 
 //Constants

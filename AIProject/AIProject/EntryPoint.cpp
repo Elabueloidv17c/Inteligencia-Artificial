@@ -4,11 +4,12 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>
 
-int main()
-{
-	World instance;
+int main(){
 
-	instance.Initialize(WindowData{ "IA Project" , 1280, 720, sf::Style::Default });
+	World 
+  instance;
+
+	instance.Initialize(WindowData{ "IA Project" , 1024, 1024, sf::Style::Default });
 	instance.Update();
 
 	return 0;

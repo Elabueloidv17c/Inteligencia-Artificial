@@ -153,6 +153,15 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="AgentManager.cpp" />
+    <ClCompile Include="BoidState.cpp" />
+    <ClCompile Include="CircleObstacle.cpp" />
+    <ClCompile Include="EndState.cpp" />
+    <ClCompile Include="FSM.cpp" />
+    <ClCompile Include="NodePlacer.cpp" />
+    <ClCompile Include="Obstacle.cpp" />
+    <ClCompile Include="Path.cpp" />
+    <ClCompile Include="PathNode.cpp" />
+    <ClCompile Include="RunState.cpp" />
     <ClCompile Include="World.cpp" />
     <ClCompile Include="Boid.cpp" />
     <ClCompile Include="EntryPoint.cpp" />
@@ -162,6 +171,15 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AgentManager.h" />
+    <ClInclude Include="BoidState.h" />
+    <ClInclude Include="CircleObstacle.h" />
+    <ClInclude Include="EndState.h" />
+    <ClInclude Include="FSM.h" />
+    <ClInclude Include="NodePlacer.h" />
+    <ClInclude Include="Obstacle.h" />
+    <ClInclude Include="Path.h" />
+    <ClInclude Include="PathNode.h" />
+    <ClInclude Include="RunState.h" />
     <ClInclude Include="World.h" />
     <ClInclude Include="Boid.h" />
     <ClInclude Include="Headers.h" />
