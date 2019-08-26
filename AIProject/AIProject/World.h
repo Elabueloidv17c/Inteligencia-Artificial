@@ -8,42 +8,24 @@
 #include "PathNode.h"
 #include "Path.h"
 	
-class World
-{	
-	AgentManager		
-	m_agents;
-	
-	vector <Path>
-	m_paths;
+#include "Scene.h"
+#include "GridNode.h"
+#include "Grid.h"
 
-	vector <CircleObstacle>
-	m_obstacles;
+class World {
 
-	NodePlacer
-	m_levelDesigner;
-
-	RenderWindow		
-	m_window;
-	
-	Event						
-	m_envent;
-
-	Timer						
-	m_timer;
-
-	Texture
-	m_backGroundexture;
-
-	Sprite
-	m_backgroundSprite;
-
-	void				CatchMessages();
+	RenderWindow	m_window;
+	Scene*				m_scene;
+	Event					m_event;
+	Timer					m_timer;
 
 public:
 
-	void				Initialize(WindowData window);
-	void				Update();
-	void				Render();
+	void					Initialize(WindowData window);
+	void					CatchMessages();
+	void					ShutDown();
+	void					Update();
+	void					Render();
 
 	World() = default;
 	~World() = default;

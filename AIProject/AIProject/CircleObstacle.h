@@ -4,7 +4,7 @@ class CircleObstacle : public Obstacle
 {
 #ifdef DEBUG
 	CircleShape
-		m_shape;
+	m_shape;
 #endif // DEBUG
 
 	float m_radius;

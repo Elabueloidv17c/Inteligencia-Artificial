@@ -3,44 +3,8 @@
 #include "PathNode.h"
 #include "AgentManager.h"
 
-Boid* Boid::GetEvadeObjective()
-{
-	return m_evadeObjective;
-}
-
-Boid* Boid::GetPursueObjective()
-{
-	return m_pursueObjective;
-}
-
-vector<PathNode>* Boid::GetPath()
-{
-	return m_path;
-}
-
-vector<CircleObstacle>* Boid::GetObstacles()
-{
-	return m_obstacles;
-}
-
-AgentManager * Boid::GetParent()
-{
-	return m_parent;
-}
-
-int * Boid::GetCurrentPathNode()
-{
-	return &m_currentPathNode;
-}
-
-bool * Boid::GetIsPathReverse()
-{
-	return &m_isPathReverse;
-}
-
 Boid::Boid() {
 	m_currentState = EBehaviour::Run;
-	m_currentLap = 1;
 	m_timer = 0.0f;
 	m_currentPathNode = 0;
 	m_seekObjective = nullptr;
@@ -48,7 +12,6 @@ Boid::Boid() {
 	m_evadeObjective = nullptr;
 	m_pursueObjective = nullptr;
 	m_arriveObjective = nullptr;
-	m_obstacles = nullptr;
 	m_parent = nullptr;
 	m_path = nullptr;
 }
@@ -59,7 +22,13 @@ Boid::~Boid() {
 
 #ifdef DEBUG
 void 
-Boid::DrawLine(Vector2 position, Vector2 direction, RenderWindow& window, float magnitude){
+Boid::DrawLine(
+								Vector2 position, 
+								Vector2 direction, 
+								RenderWindow& window, 
+								float magnitude
+) {
+
 	direction *= magnitude;
 
 	Vertex line[2] = { Vertex(Vector2f(position.x , position.y)), 
@@ -67,10 +36,12 @@ Boid::DrawLine(Vector2 position, Vector2 direction, RenderWindow& window, float 
 
 	window.draw(line, 2, sf::Lines);
 }
-#endif // DEBUG
+#endif
 
 bool 
-Boid::Initialize(AgentData& agent) {
+Boid::Initialize(
+									AgentData& agent
+) {
 	m_position = agent.position;
 	m_direction = agent.direction;
 
@@ -93,7 +64,7 @@ Boid::Initialize(AgentData& agent) {
 	m_pathMagnitude = agent.pathMagnitude;
 	m_courseCorrection = agent.courseCorrection;
 	m_flockMagnitude = agent.flockMagnitude;
-
+	m_neighborRadius = agent.neighborRadius;
 	m_separationRadius = agent.separationRadius;
 	m_separationMagnitude = agent.separationMagnitude;
 	m_averageDirectionMagnitude = agent.averageDirectionMagnitude;
@@ -116,10 +87,15 @@ Boid::Initialize(AgentData& agent) {
 }
 
 void 
-Boid::Update(float deltaTime) {
+Boid::Update(
+							float deltaTime
+) {
 	
 	//Set steering force to 0 at the beginning of each frame
 	m_steeringForce = Vector2();
+
+	//Get Closest Entities
+	GetNeighbors(m_position, m_neighborRadius, *m_parent, m_neighbors);
 
 	//Setting up the current speed
 	m_currentSpeed += m_acceleration * deltaTime;
@@ -149,10 +125,12 @@ Boid::Update(float deltaTime) {
 		m_steeringForce += Evade(m_position, m_evadeObjective, m_evadeMagnitude, 100, 3.0f, deltaTime);
 	}
 	if (m_path != nullptr) {
-		m_steeringForce += FollowCircuit(m_position, *m_path, m_currentPathNode, m_currentSpeed, m_courseCorrection, m_pathMagnitude, deltaTime);
+		m_steeringForce += FollowPathC(m_position, *m_path, m_currentPathNode, m_pathMagnitude);
 	}
 	if (m_parent != nullptr) {
-		m_steeringForce += Separation(m_position, *m_parent, m_separationRadius, m_separationMagnitude) * (m_currentSpeed / m_speed);
+		m_steeringForce += Separation(m_position, m_neighbors, m_separationRadius, m_separationMagnitude);
+		//m_steeringForce += Flock(m_position, m_neighbors, m_separationRadius, m_separationMagnitude, 
+		//m_cohesionMagnitude, m_cohesionMagnitude);
 	}
 	if (m_obstacles != nullptr) {
 		m_steeringForce += ObstacleAvoidance(m_position, m_direction, m_obstacleVision, GetClosestObstacle(m_position, 
@@ -177,56 +155,79 @@ Boid::Update(float deltaTime) {
 }
 
 void 
-Boid::SetSeekObjective(Vector2* objective) {
+Boid::SetSeekObjective(
+												Vector2* objective
+) {
 	m_seekObjective = objective;
 }
 
-void Boid::SetFlock(AgentManager* parent) {
+void Boid::SetFlock(
+										AgentManager* parent
+) {
 	m_parent = parent;
 }
 
 void 
-Boid::SetPath(vector<PathNode>* path) {
+Boid::SetPath(
+							vector<PathNode>* path
+) {
   m_path = path;
 }
 
 void
-Boid::SetObstacles(vector<CircleObstacle>* obstacle) {
+Boid::SetObstacles(
+										vector<CircleObstacle>* obstacle
+) {
 	m_obstacles = obstacle;
 }
 
 void 
-Boid::SetPathOrientation(bool isReverse) {
+Boid::SetPathOrientation(
+													bool isReverse
+) {
 	m_isPathReverse = isReverse;
 }
 
 void 
-Boid::SetCurrentPathNode(int node) {
+Boid::SetCurrentPathNode(
+													int node
+) {
 	m_currentPathNode = node;
 }
 
 void 
-Boid::SetFleeObjective(Vector2* objective) {
+Boid::SetFleeObjective(
+												Vector2* objective
+) {
 	m_fleeObjective = objective;
 }
 
 void 
-Boid::SetArriveObjective(Vector2* objective) {
+Boid::SetArriveObjective(
+													Vector2* objective
+) {
 	m_arriveObjective = objective;
 }
 
 void 
-Boid::SetPursueObjective(Boid * objective) {
+Boid::SetPursueObjective(
+													Boid* objective
+) {
 	m_pursueObjective = objective;
 }
 
 void 
-Boid::SetEvadeObjective(Boid * objective) {
+Boid::SetEvadeObjective(
+												Boid* objective
+) {
 	m_evadeObjective = objective;
 }
 
 void 
-Boid::SetPosition(int x, int y) {
+Boid::SetPosition(
+									int x, 
+									int y
+) {
 	m_position.x = x;
 	m_position.y = y;
 }
@@ -236,29 +237,24 @@ Boid::Get(){
 	return this;
 }
 
-Vector2 * Boid::GetDirection()
-{
+Vector2* 
+Boid::GetDirection() {
 	return &m_direction;
 }
 
-Vector2 * Boid::GetVision()
-{
+Vector2* 
+Boid::GetVision() {
 	return &m_vision;
 }
 
-Vector2 * Boid::GetSteeringForce()
-{
+Vector2* 
+Boid::GetSteeringForce() {
 	return &m_steeringForce;
 }
 
-Vector2 * Boid::GetSteeringDirection()
-{
+Vector2* 
+Boid::GetSteeringDirection() {
 	return &m_steeringDirection;
-}
-
-unsigned int * Boid::GetCurrentLap()
-{
-	return &m_currentLap;
 }
 
 EBehaviour*
@@ -266,28 +262,38 @@ Boid::GetCurrentState() {
 	return &m_currentState;
 }
 
-Vector2 * Boid::GetSeekObjective()
+Vector2* 
+Boid::GetSeekObjective()
 {
 	return m_seekObjective;
 }
 
-Vector2 * Boid::GetFleeObjective()
-{
+Vector2* 
+Boid::GetFleeObjective() {
 	return m_fleeObjective;
 }
 
-Vector2 * Boid::GetArriveObjective()
-{
+Vector2* 
+Boid::GetArriveObjective() {
 	return m_arriveObjective;
 }
 
+Vector2*
+Boid::GetPosition() {
+	return &m_position;
+}
+
 void 
-Boid::SetCurrentState(EBehaviour state) {
+Boid::SetCurrentState(
+											EBehaviour state
+) {
 	m_currentState = state;
 }
 
 void 
-Boid::Render(RenderWindow& window) {
+Boid::Render(
+							RenderWindow& window
+) {
 	//Getting the center of the agent's sprite
 	m_sprite.setOrigin(m_texture.getSize().x * HALF, m_texture.getSize().y * HALF);
 	m_sprite.setPosition(m_position.x, m_position.y);
@@ -300,29 +306,50 @@ Boid::Render(RenderWindow& window) {
 	window.draw(m_sprite);
 }
 
+//----------------------------------------------------------------------------------------------
 //Behaviours
+//----------------------------------------------------------------------------------------------
+
 Vector2 
-Boid::Seek(const Vector2& position, const Vector2& objective, float magnitude) {
+Boid::Seek(
+						const Vector2& position, 
+						const Vector2& objective, 
+						float magnitude
+) {
 	Vector2 target = objective - position;
 	target.Normalize();
 
 	return target *= magnitude;
 }
 
-Vector2 Boid::Flock(const Vector2& position, AgentManager& agents, float separationRadius, float separationMagnitude,
-float cohesionMagnitude, float averageDirectionMagnitude) {
+Vector2 
+Boid::Flock(
+						const Vector2& position, 
+						vector <Boid*>& neighbors,
+						float separationRadius, 
+						float separationMagnitude,
+						float cohesionMagnitude, 
+						float averageDirectionMagnitude
+) {
 
-	return Separation(position, agents, separationRadius, separationMagnitude) + 
-	Cohesion(position, agents, cohesionMagnitude) + AvergeDirection(agents, averageDirectionMagnitude);
+	return Separation(position, neighbors, separationRadius, separationMagnitude) +
+	Cohesion(position, neighbors, cohesionMagnitude) + AvergeDirection(neighbors, averageDirectionMagnitude);
 }
-Vector2 Boid::Separation(const Vector2& position, AgentManager& agents, float radius, float magnitude) {
+
+Vector2 
+Boid::Separation(
+									const Vector2& position, 
+									vector <Boid*>& neighbors,
+									float radius, 
+									float magnitude
+) {
 
 	Vector2 repulsion;
 	Vector2 distance;
 
-	for (int i = 0; i < agents.GetNumAgents(); i++)
-	{
-		distance = agents.GetAgentAt(i)->m_position - position;
+	for (int i = 0; i < neighbors.size(); i++) {
+		distance = *neighbors[i]->GetPosition() - position;
+		
 		if(distance.Magnitude() < radius) {
 			repulsion += distance.Normalized() * (1 - (distance.Magnitude() + 0.0000001f / radius) * magnitude);
 		}
@@ -330,35 +357,47 @@ Vector2 Boid::Separation(const Vector2& position, AgentManager& agents, float ra
 
 	return repulsion;
 }
-Vector2 Boid::Cohesion(const Vector2& position, AgentManager& agents, float magnitude)
-{
+
+Vector2 Boid::Cohesion(
+												const Vector2& position, 
+												vector <Boid*>& neighbors,
+												float magnitude
+) {
 	Vector2 atraction;
 
-	for (int i = 0; i < agents.GetNumAgents(); ++i) {
-		atraction += agents.GetAgentAt(i)->m_position;
+	for (int i = 0; i < neighbors.size(); ++i) {
+		atraction += *neighbors[i]->GetPosition();
 	}
-	atraction /= agents.GetNumAgents();
+
+	atraction /= neighbors.size();
 
 	return Seek(position, atraction, magnitude);
 }
-Vector2 Boid::AvergeDirection(AgentManager& agents, float magnitude)
-{
+
+Vector2 Boid::AvergeDirection(
+															vector <Boid*>& neighbors,
+															float magnitude
+) {
 	Vector2 newDir;
 
-	for (int i = 0; i < agents.GetNumAgents(); ++i) {
-		newDir += agents.GetAgentAt(i)->m_direction;
+	for (int i = 0; i < neighbors.size(); ++i) {
+		newDir += *neighbors[i]->GetDirection();
 	}
-	newDir /= agents.GetNumAgents();
-
+	newDir /= neighbors.size();
 
 	return newDir.Normalized() * magnitude;
 }
 
 Vector2 
-Boid::Flee(const Vector2& position, const Vector2& danger, const float& magnitude, const float& radius) {
+Boid::Flee(
+						const Vector2& position, 
+						const Vector2& danger, 
+						const float& magnitude, 
+						const float& radius
+) {
 	Vector2 target = position - danger;
 
-	if (target.Magnitude() <= radius){
+	if (target.Magnitude() <= radius) {
 		return -Seek(position, danger, magnitude);
 	}
 
@@ -366,7 +405,13 @@ Boid::Flee(const Vector2& position, const Vector2& danger, const float& magnitud
 }
 
 Vector2 
-Boid::Arrive(const Vector2& position, const Vector2& objective, float radius, float magnitude) {
+Boid::Arrive(
+							const Vector2& position, 
+							const Vector2& objective, 
+							float radius, 
+							float magnitude
+) {
+
 	Vector2 target = objective - position;
 	target.Normalize();
 	target *= magnitude;
@@ -374,11 +419,19 @@ Boid::Arrive(const Vector2& position, const Vector2& objective, float radius, fl
 	if ((objective - position).Magnitude() <= radius){
 		return target *= (objective - position).Magnitude() / radius;
 	}
+
 	return target;
 }
 
 Vector2 
-Boid::Pursue(const Vector2& position, const Boid* objective, float magnitude, float projectedTime, float deltaTime) {
+Boid::Pursue(
+							const Vector2& position,
+							const Boid* objective, 
+							float magnitude, 
+							float projectedTime, 
+							float deltaTime
+) {
+
 	Vector2 target = objective->m_position - position;
 
 	Vector2 projectedPosition = objective->m_position + (objective->m_direction * objective->m_currentSpeed * projectedTime);
@@ -391,7 +444,14 @@ Boid::Pursue(const Vector2& position, const Boid* objective, float magnitude, fl
 }
 
 Vector2 
-Boid::Evade(const Vector2& position, const Boid* danger, float magnitude, float radius, float projectedTime, float deltaTime) {
+Boid::Evade(
+						const Vector2& position,
+						const Boid* danger, 
+						float magnitude, 
+						float radius, 
+						float projectedTime, 
+						float deltaTime
+) {
 	Vector2 target = position - danger->m_position;
 	Vector2 projectedDanger = danger->m_position + (danger->m_direction * danger->m_currentSpeed * projectedTime * HALF);
 
@@ -402,8 +462,17 @@ Boid::Evade(const Vector2& position, const Boid* danger, float magnitude, float 
 }
 
 Vector2 
-Boid::Wander(const Vector2& position, const Vector2& direction, float magnitude, float distProj, float radius, int angle, float deltaTime, 
-float& currentTime, float timeLimit) {
+Boid::Wander(
+							const Vector2& position, 
+							const Vector2& direction, 
+							float magnitude, 
+							float distProj, 
+							float radius, 
+							int angle, 
+							float deltaTime, 
+							float& currentTime, 
+							float timeLimit
+) {
 	currentTime += deltaTime;
 
 	if (currentTime < timeLimit) {
@@ -424,8 +493,15 @@ float& currentTime, float timeLimit) {
 }
 
 Vector2
-Boid::Wander(const Vector2& position, const Vector2& direction, int min, int max, float magnitude, float deltaTime, 
-float& currentTime, float timeLimit) {
+Boid::Wander(
+							const Vector2& position, 
+							const Vector2& direction, 
+							int min, int max, 
+							float magnitude, 
+							float deltaTime, 
+							float& currentTime, 
+							float timeLimit
+) {
 	currentTime += deltaTime;
 
 	if (currentTime < timeLimit) {
@@ -436,16 +512,24 @@ float& currentTime, float timeLimit) {
 }
 
 Vector2 
-Boid::Wander(const Vector2& position, int min, int max, float magnitude) {
+Boid::Wander(
+							const Vector2& position, 
+							int min, 
+							int max, 
+							float magnitude
+) {
+
 	Vector2 objective = Vector2(Math::RandomNumber(min, max), Math::RandomNumber(min, max));
 	return Seek(position, objective, magnitude);
 }
 
-//Follow Path (common)
-//Follow The leader
 
 CircleObstacle* 
-Boid::GetClosestObstacle(const Vector2& position, const float& detectionRadius, vector<CircleObstacle>* obstacles) {
+Boid::GetClosestObstacle(
+													const Vector2& position, 
+													const float& detectionRadius, 
+													vector<CircleObstacle>* obstacles
+) {
 
 	CircleObstacle* closest = nullptr;
 	float minDistance = detectionRadius;
@@ -465,8 +549,13 @@ Boid::GetClosestObstacle(const Vector2& position, const float& detectionRadius, 
 }
 
 Vector2 	
-Boid::ObstacleAvoidance(const Vector2& position, const Vector2& direction, const float visionRange, CircleObstacle* obstacle,
-const float& magnitude) {
+Boid::ObstacleAvoidance(
+												const Vector2& position, 
+												const Vector2& direction, 
+												const float visionRange, 
+												CircleObstacle* obstacle,
+												const float& magnitude
+) {
 	
 	if (obstacle) {
 		Vector2	vision = direction * visionRange, obstacleDistance;
@@ -483,8 +572,79 @@ const float& magnitude) {
 }
 
 Vector2 
-Boid::FollowCircuit(const Vector2& position, vector <PathNode>& path, int& currentNode, float&currentSpeed, float correctionMag, 
-float magnitude,float deltaTime) {
+Boid::FollowPathC(
+									const Vector2& position, 
+									vector<PathNode>& path, 
+									int& currentNode, 
+									float magnitude
+) {
+
+	//Get next node, if we are in the last one, next node is the first
+	Vector2 destination = *path[((currentNode + 1) >= path.size()) ? 0 : currentNode + 1].GetPosition();
+
+	//Get vector from entity to the road
+	Vector2 closestPointVector = *path[currentNode].GetPosition() + 
+	(position - *path[currentNode].GetPosition()).Projection(destination - *path[currentNode].GetPosition());
+
+	//Get relative magnitude of course correction
+	float distanceToRoad = ((closestPointVector - position).Magnitude() / path[currentNode].GetRoadLimit()) * magnitude;
+
+	//Set nexth node if we reached a new one
+	if ((destination - position).Magnitude() < path[currentNode].GetSize()) {
+		currentNode++;
+		if (currentNode >= path.size()) {
+			currentNode = 0;
+		}
+	}
+
+	//Adding both vectors to follow the path and correct the final direction depending on the distance from the road
+	return Seek(position, destination, magnitude) + Seek(position, closestPointVector, distanceToRoad);
+}
+
+Vector2 Boid::FollowPath(
+	const Vector2& position,
+	vector<PathNode>& path,
+	int& currentNode,
+	float magnitude
+) {
+	//If the next node is the last, arrive to it
+	if ((currentNode + 2) >= path.size()) {
+		return Arrive(position, *path[currentNode + 1].GetPosition(), path[currentNode + 1].GetRoadLimit(), magnitude);
+	}
+	else {
+		Vector2 destination = *path[currentNode + 1].GetPosition();
+
+		//Get vector from entity to the road
+		Vector2 closestPointVector = *path[currentNode].GetPosition() +
+			(position - *path[currentNode].GetPosition()).Projection(destination - *path[currentNode].GetPosition());
+
+		//Get relative magnitude of course correction
+		float distanceToRoad = ((closestPointVector - position).Magnitude() / path[currentNode].GetRoadLimit()) * magnitude;
+
+		//Set nexth node if we reached a new one
+		if ((destination - position).Magnitude() < path[currentNode].GetSize()) {
+			currentNode++;
+			if (currentNode >= path.size()) {
+				currentNode = 0;
+			}
+		}
+
+		//Adding both vectors to follow the path and correct the final direction depending on the distance from the road
+		return Seek(position, destination, magnitude) + Seek(position, closestPointVector, distanceToRoad);
+	}
+}
+
+
+Vector2 
+Boid::FollowCircuit(
+										const Vector2& position, 
+										vector <PathNode>& path, 
+										int& currentNode, 
+										float&currentSpeed, 
+										float correctionMag, 
+										float magnitude,
+										float deltaTime
+) {
 
 	/*
 #ifdef DEBUG
@@ -554,132 +714,60 @@ float magnitude,float deltaTime) {
 	return Seek(position, destination, magnitude) + courseCorrection;
 }
 
-float * Boid::GetSeekMagnitude()
-{
-	return &m_seekMagnitude;
+void Boid::GetNeighbors(
+												const Vector2& position,
+												const float& radius,
+												AgentManager& agents, 
+												vector<Boid*>& neighbors
+) {
+
+	neighbors.clear();
+	Vector2 distance;
+
+	for (int i = 0; i < agents.GetNumAgents(); i++) {
+		
+		distance = agents.GetAgentAt(i)->m_position - position;
+
+		if (distance.Magnitude() > 0 && distance.Magnitude() < radius) {
+			neighbors.push_back(agents.GetAgentAt(i));
+		}
+	}
 }
 
-float * Boid::GetFleeMagnitude()
-{
-	return &m_fleeMagnitude;
+Boid*
+Boid::GetEvadeObjective() {
+	return m_evadeObjective;
 }
 
-float * Boid::GetEvadeMagnitude()
-{
-	return &m_evadeMagnitude;
+Boid*
+Boid::GetPursueObjective() {
+	return m_pursueObjective;
 }
 
-float * Boid::GetArriveMagnitude()
-{
-	return &m_arriveMagnitude;
+vector<PathNode>*
+Boid::GetPath() {
+	return m_path;
 }
 
-float * Boid::GetPursueMagnitude()
-{
-	return &m_pursueMagnitude;
+vector<CircleObstacle>*
+Boid::GetObstacles() {
+	return m_obstacles;
 }
 
-float * Boid::GetWanderMagnitude()
-{
-	return &m_wanderMagnitude;
+AgentManager*
+Boid::GetParent() {
+	return m_parent;
 }
 
-float * Boid::GetWanderTMagnitude()
-{
-	return &m_wanderTMagnitude;
+int*
+Boid::GetCurrentPathNode() {
+	return &m_currentPathNode;
 }
 
-float * Boid::GetWanderRMagnitude()
-{
-	return &m_wanderRMagnitude;
+bool*
+Boid::GetIsPathReverse() {
+	return &m_isPathReverse;
 }
 
-float * Boid::GetVisionRange()
-{
-	return &m_visionRange;
-}
-
-float * Boid::GetPathMagnitude()
-{
-	return &m_pathMagnitude;
-}
-
-float * Boid::GetCourseCorrection()
-{
-	return &m_courseCorrection;
-}
-
-float * Boid::GetFlockMagnitude()
-{
-	return &m_flockMagnitude;
-}
-
-float * Boid::GetSeparationRadius()
-{
-	return &m_separationRadius;
-}
-
-float * Boid::GetSeparationMagnitude()
-{
-	return &m_separationMagnitude;
-}
-
-float * Boid::GetAverageDirectionMagnitude()
-{
-	return &m_averageDirectionMagnitude;
-}
-
-float * Boid::GetCohesionMagnitude()
-{
-	return &m_cohesionMagnitude;
-}
-
-float * Boid::GetObstacleVision()
-{
-	return &m_obstacleVision;
-}
-
-float * Boid::GetObstacleDetectionRadius()
-{
-	return &m_obstacleDetectionRadius;
-}
-
-float * Boid::GetObstacleAvoidanceMagnitude()
-{
-	return &m_obstacleAvoidanceMagnitude;
-}
-
-float * Boid::GetAcceleration()
-{
-	return &m_acceleration;
-}
-
-float * Boid::GetCurrentSpeed()
-{
-	return &m_currentSpeed;
-}
-
-float * Boid::GetWaitTime()
-{
-	return &m_waitTime;
-}
-
-float * Boid::GetTimer()
-{
-	return &m_timer;
-}
-
-float * Boid::GetSpeed()
-{
-	return &m_speed;
-}
-
-float * Boid::GetMass()
-{
-	return &m_mass;
-}
-
-Vector2 * Boid::GetPosition()
-{
-	return &m_direction;
-}
+//Follow Path (common)
+//Follow The leader

@@ -12,9 +12,6 @@ class Boid
 	EBehaviour 
 	m_currentState;
 
-	unsigned int
-	m_currentLap;
-
 	Vector2u			
   m_textureCenter;
 
@@ -24,13 +21,6 @@ class Boid
 	Sprite				
   m_sprite;
 
-	float				
-  m_acceleration,
-	m_currentSpeed,
-	m_waitTime,
-	m_timer,
-	m_speed,
-	m_mass;
 	Vector2
 	m_position,
   m_direction,
@@ -38,7 +28,14 @@ class Boid
 	m_steeringForce,
 	m_steeringDirection;
 
-	float
+	float				
+  m_acceleration,
+	m_currentSpeed,
+	m_waitTime,
+	m_timer,
+	m_speed,
+	m_mass,
+
 	m_seekMagnitude,
 	m_fleeMagnitude,
 	m_evadeMagnitude,
@@ -47,6 +44,8 @@ class Boid
 	m_wanderMagnitude,
 	m_wanderTMagnitude,
 	m_wanderRMagnitude,
+
+	m_neighborRadius,
 	m_visionRange,
 	m_pathMagnitude,
 	m_courseCorrection,
@@ -77,8 +76,14 @@ class Boid
 	vector <CircleObstacle>* 
 	m_obstacles;
 
+	vector <CircleObstacle>*
+	m_closeObstacles;
+
 	AgentManager* 
 	m_parent;
+
+	vector <Boid*>
+	m_neighbors;
 
 	int					
   m_currentPathNode;
@@ -87,57 +92,6 @@ class Boid
 	m_isPathReverse;
 
 public:
-
-	float*
-	GetSeekMagnitude();
-	float*
-	GetFleeMagnitude();
-	float*
-	GetEvadeMagnitude();
-	float*
-	GetArriveMagnitude();
-	float*
-	GetPursueMagnitude();
-	float*
-	GetWanderMagnitude();
-	float*
-	GetWanderTMagnitude();
-	float*
-	GetWanderRMagnitude();
-	float*
-	GetVisionRange();
-	float*
-	GetPathMagnitude();
-	float*
-	GetCourseCorrection();
-	float*
-	GetFlockMagnitude();
-	float*
-	GetSeparationRadius();
-	float*
-	GetSeparationMagnitude();
-	float*
-	GetAverageDirectionMagnitude();
-	float*
-	GetCohesionMagnitude();
-	float*
-	GetObstacleVision();
-	float*
-	GetObstacleDetectionRadius();
-	float*
-	GetObstacleAvoidanceMagnitude();
-	float*
-	GetAcceleration();
-	float*
-	GetCurrentSpeed();
-	float*
-	GetWaitTime();
-	float*
-	GetTimer();
-	float*
-	GetSpeed();
-	float*
-	GetMass();
 
 	Vector2*
 	GetPosition();
@@ -153,9 +107,6 @@ public:
 
 	Vector2*
 	GetSteeringDirection();
-
-	unsigned int*
-	GetCurrentLap();
 
 	EBehaviour*
 	GetCurrentState();
@@ -192,15 +143,29 @@ public:
 	~Boid();
 
 	bool 
-  Initialize(AgentData& agent);
+  Initialize(
+							AgentData& agent
+	);
 	
 	void
-	Render(RenderWindow& window), Update(float deltaTime);
+	Render(
+			RenderWindow& window
+	);
+
+	void
+	Update(
+			float deltaTime
+	);
 
 #ifdef DEBUG
 	void
-  DrawLine(Vector2 position, Vector2 direction, RenderWindow& window, float magnitude);
-#endif // DEBUG
+  DrawLine(
+						Vector2 position, 
+						Vector2 direction, 
+						RenderWindow& window, 
+						float magnitude
+	);
+#endif 
 
 	void
 	SetPosition(int x, int y),
@@ -225,43 +190,161 @@ public:
 	SetCurrentState(EBehaviour state);
 
 	static Vector2 
-  Seek(const Vector2& position, const Vector2& objective, float magnitude),
-	Flee(const Vector2& position, const Vector2& danger, const float& magnitude, const float& radius),
-	Arrive(const Vector2& position, const Vector2& objective, float radius, float magnitude),
-	
-	Pursue(const Vector2& position, const Boid* objective, float magnitude, float projectedTime, float deltaTime),
-	Evade(const Vector2& position, const Boid* danger, float magnitude, float radius, float projectedTime, float deltaTime),
+  Seek(
+		const Vector2& position, 
+		const Vector2& objective, 
+		float magnitude
+	);
 
-	Wander(const Vector2& position, int min, int max, float magnitude),
-	Wander(const Vector2& position, const Vector2& direction, int min, int max, float magnitude, float deltaTime, float& currentTime, 
-  float timeLimit),
-  Wander(const Vector2& position, const Vector2& direction, float magnitude, float distProj, float radius, int angle, 
-	float deltaTime, float& currentTime, float timeLimit),
-  
-	ObstacleAvoidance(const Vector2& position, const Vector2& direction, const float visionRange, CircleObstacle* obstacle, 
-	const float& magnitude);
+	static Vector2
+	Flee(
+		const Vector2& position, 
+		const Vector2& danger, 
+		const float& magnitude, 
+		const float& radius
+	);
 
-	CircleObstacle* 
-	GetClosestObstacle(const Vector2& position, const float& detectionRadius, vector <CircleObstacle>* obstacles);
-
-	//FollowTheLeader();
-	//FollowPath();
+	static Vector2
+	Arrive(
+		const Vector2& position, 
+		const Vector2& objective, 
+		float radius, 
+		float magnitude
+	);
 	
 	static Vector2
-	Separation(const Vector2& position, AgentManager& agents, float radius, float magnitude),
-	Cohesion(const Vector2& position, AgentManager& agents, float magnitude),
-	AvergeDirection(AgentManager& agents, float magnitude),
-	Flock(const Vector2& position, AgentManager& agents, float separationRadius, float separationMagnitude,
-	float cohesionMagnitude, float averageDirectionMagnitude),
+	Pursue(
+		const Vector2& position, 
+		const Boid* objective, 
+		float magnitude, 
+		float projectedTime, 
+		float deltaTime
+	);
+
+	static Vector2
+	Evade(
+		const Vector2& position, 
+		const Boid* danger, 
+		float magnitude, 
+		float radius, 
+		float projectedTime, 
+		float deltaTime
+	);
+	
+	static Vector2
+	Wander(
+		const Vector2& position, 
+		int min, 
+		int max, 
+		float magnitude
+	);
+
+	static Vector2
+	Wander(
+		const Vector2& position,
+		const Vector2& direction, 
+		int min, 
+		int max, 
+		float magnitude, 
+		float deltaTime, 
+		float& currentTime,
+		float timeLimit
+	);
+
+	static Vector2
+	Wander(
+		const Vector2& position, 
+		const Vector2& direction, 
+		float magnitude, 
+		float distProj, 
+		float radius, 
+		int angle,
+		float deltaTime, 
+		float& currentTime, 
+		float timeLimit
+	);
+  
+	static Vector2
+	ObstacleAvoidance(
+		const Vector2& position, 
+		const Vector2& direction, 
+		const float visionRange, 
+		CircleObstacle* obstacle, 
+		const float& magnitude
+	);
+
+	static Vector2
+	FollowPathC(
+		const Vector2& position,
+		vector <PathNode>& path,
+		int& currentNode,
+		float magnitude
+	);
+
+	static Vector2
+	FollowPath(
+		const Vector2& position,
+		vector <PathNode>& path,
+		int& currentNode,
+		float magnitude
+	);
+
+	CircleObstacle* 
+	GetClosestObstacle(
+		const Vector2& position, 
+		const float& detectionRadius, 
+		vector <CircleObstacle>* obstacles
+	);
+
+	//FollowTheLeader();
+	
+	static Vector2
+		Separation(const Vector2& position, vector <Boid*>& neighbors, float radius, float magnitude);
+
+	static Vector2
+	Cohesion(
+		const Vector2& position, 
+		vector <Boid*>& neighbors, 
+		float magnitude
+	);
+
+	static Vector2
+	AvergeDirection(
+		vector <Boid*>& neighbors, 
+		float magnitude
+	);
+
+	static Vector2
+	Flock(
+		const Vector2& position, 
+		vector <Boid*>& neighbors, 
+		float separationRadius, 
+		float separationMagnitude,
+		float cohesionMagnitude, 
+		float averageDirectionMagnitude
+	);
+
+	static void
+	GetNeighbors(
+		const Vector2& position,
+		const float& radius,
+		AgentManager& agents,
+		vector <Boid*>& neighbors
+	);
 
 	//--------------------------------------------------------------------------------------------------------------------------------
 	//Car Functions
 	//--------------------------------------------------------------------------------------------------------------------------------
-  FollowPath(const Vector2& position, vector <PathNode>& path, int& currentNode, float& currentSpeed, 
-	float correctionMag, float magnitude),
-
-
-	FollowCircuit(const Vector2& position, vector <PathNode>& path, int& currentNode, float& currentSpeed, float correctionMag, float magnitude,
-	float deltaTime);
+	
+	static Vector2
+	FollowCircuit(
+		const Vector2& position, 
+		vector <PathNode>& path, 
+		int& currentNode, 
+		float& currentSpeed, 
+		float correctionMag, 
+		float magnitude,
+		float deltaTime
+	);
 };
 

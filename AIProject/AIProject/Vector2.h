@@ -1,4 +1,5 @@
 #pragma once
+#include <SFML/Graphics.hpp>
 
 class Vector2
 {
@@ -9,6 +10,7 @@ public:
 	x, y;
 
 	//Constructors
+	Vector2(sf::Vector2f slfmVector);
 	Vector2(float x, float y);
 	Vector2();
 

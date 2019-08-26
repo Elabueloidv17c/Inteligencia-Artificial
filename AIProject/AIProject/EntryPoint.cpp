@@ -9,7 +9,7 @@ int main(){
 	World 
   instance;
 
-	instance.Initialize(WindowData{ "IA Project" , 1024, 1024, sf::Style::Default });
+	instance.Initialize(WindowData{ "IA Project" , 1280, 720, sf::Style::Titlebar | sf::Style::Close });
 	instance.Update();
 
 	return 0;

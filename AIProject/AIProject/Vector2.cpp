@@ -1,6 +1,11 @@
 #include "Vector2.h"
 #include <math.h>
 
+Vector2::Vector2(sf::Vector2f slfmVector) {
+	this->x = slfmVector.x;
+	this->y = slfmVector.y;
+}
+
 Vector2::Vector2(float x, float y)
 {
 	this->x = x;
@@ -78,7 +83,7 @@ float Vector2::Cross(const Vector2& other){
 }
 
 //Operators
-Vector2& Vector2:: operator += (const Vector2& other){
+Vector2& Vector2::operator += (const Vector2& other){
 	x += other.x; 
 	y += other.y; 
 	

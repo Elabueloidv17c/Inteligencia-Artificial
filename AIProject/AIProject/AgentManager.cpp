@@ -26,7 +26,8 @@ AgentManager::GetNumAgents() {
 	return m_agents.size();
 }
 
-void AgentManager::Render(RenderWindow& window) {
+void 
+AgentManager::Render(RenderWindow& window) {
 	for (int i = 0; i < m_agents.size(); i++) {
 		m_agents[i].Render(window);
 	}

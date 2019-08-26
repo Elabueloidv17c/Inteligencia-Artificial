@@ -22,32 +22,32 @@
     <VCProjectVersion>16.0</VCProjectVersion>
     <ProjectGuid>{8299F171-377A-4DBC-BCE9-778AF5BD7845}</ProjectGuid>
     <RootNamespace>AIProject</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
@@ -153,15 +153,28 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="AgentManager.cpp" />
+    <ClCompile Include="WalkerAStar.cpp" />
+    <ClCompile Include="WalkerBestFS.cpp" />
     <ClCompile Include="BoidState.cpp" />
+    <ClCompile Include="Button.cpp" />
     <ClCompile Include="CircleObstacle.cpp" />
     <ClCompile Include="EndState.cpp" />
     <ClCompile Include="FSM.cpp" />
+    <ClCompile Include="Grid.cpp" />
+    <ClCompile Include="GridMakerUI.cpp" />
+    <ClCompile Include="GridNode.cpp" />
     <ClCompile Include="NodePlacer.cpp" />
     <ClCompile Include="Obstacle.cpp" />
     <ClCompile Include="Path.cpp" />
+    <ClCompile Include="PathFinding.cpp" />
     <ClCompile Include="PathNode.cpp" />
     <ClCompile Include="RunState.cpp" />
+    <ClCompile Include="Scene.cpp" />
+    <ClCompile Include="Walker.cpp" />
+    <ClCompile Include="UserInterface.cpp" />
+    <ClCompile Include="WalkerBreadthFS.cpp" />
+    <ClCompile Include="WalkerDepthFS.cpp" />
+    <ClCompile Include="WalkerDijkstra.cpp" />
     <ClCompile Include="World.cpp" />
     <ClCompile Include="Boid.cpp" />
     <ClCompile Include="EntryPoint.cpp" />
@@ -171,15 +184,28 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AgentManager.h" />
+    <ClInclude Include="WalkerAStar.h" />
+    <ClInclude Include="WalkerBestFS.h" />
     <ClInclude Include="BoidState.h" />
+    <ClInclude Include="Button.h" />
     <ClInclude Include="CircleObstacle.h" />
     <ClInclude Include="EndState.h" />
     <ClInclude Include="FSM.h" />
+    <ClInclude Include="Grid.h" />
+    <ClInclude Include="GridMakerUI.h" />
+    <ClInclude Include="GridNode.h" />
     <ClInclude Include="NodePlacer.h" />
     <ClInclude Include="Obstacle.h" />
     <ClInclude Include="Path.h" />
+    <ClInclude Include="PathFinding.h" />
     <ClInclude Include="PathNode.h" />
     <ClInclude Include="RunState.h" />
+    <ClInclude Include="Scene.h" />
+    <ClInclude Include="Walker.h" />
+    <ClInclude Include="UserInterface.h" />
+    <ClInclude Include="WalkerBreadthFS.h" />
+    <ClInclude Include="WalkerDepthFS.h" />
+    <ClInclude Include="WalkerDijkstra.h" />
     <ClInclude Include="World.h" />
     <ClInclude Include="Boid.h" />
     <ClInclude Include="Headers.h" />

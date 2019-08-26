@@ -13,99 +13,165 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="Archivos de encabezado\Agents">
-      <UniqueIdentifier>{2a6f99b2-b4cc-4c08-b703-c51381372e0d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Archivos de encabezado\Map">
-      <UniqueIdentifier>{89e92437-2082-498c-85c1-31740f6291d3}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Archivos de encabezado\Helpers">
       <UniqueIdentifier>{8d1cb8d8-9173-4bf9-ae4d-5098a1b32e4f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Archivos de origen\Agents">
-      <UniqueIdentifier>{6f3fa8a1-99a6-4d7b-94d4-d872656ef137}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Archivos de origen\Map">
-      <UniqueIdentifier>{1d30fb1c-fc94-47d2-8d9c-bf4374986093}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Archivos de origen\Helpers">
       <UniqueIdentifier>{da91bfe3-eb31-4a28-b0d9-7400e06413d3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de encabezado\FSM">
+      <UniqueIdentifier>{a527a953-758b-4a49-91ac-f320974aba30}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de origen\FSM">
+      <UniqueIdentifier>{69d6cce7-9330-4ed1-808f-d5a041b6f848}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de encabezado\UI">
+      <UniqueIdentifier>{e584f5a6-5f9f-4f36-a2c0-7c7ce3a46910}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de encabezado\UI\Menu">
+      <UniqueIdentifier>{eada28b2-8adf-4e08-90e7-61cb637b4426}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de origen\UI">
+      <UniqueIdentifier>{3ed17c4e-8b34-4efb-af5e-c400f40857fc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de origen\UI\Menu">
+      <UniqueIdentifier>{1439e481-ed76-4cb7-9f51-a30733e7fa3f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de encabezado\Scene">
+      <UniqueIdentifier>{89e92437-2082-498c-85c1-31740f6291d3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de encabezado\Scene\Grid">
+      <UniqueIdentifier>{0507d221-3521-4acb-8866-448942937864}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de encabezado\Scene\Path">
+      <UniqueIdentifier>{e1140a12-0059-419c-9b17-d93250bfe076}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de encabezado\Scene\Obstacles">
+      <UniqueIdentifier>{ccf750b3-83cd-4aed-9fd2-23484881d89d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de origen\Scene">
+      <UniqueIdentifier>{1d30fb1c-fc94-47d2-8d9c-bf4374986093}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de origen\Scene\Obstacles">
+      <UniqueIdentifier>{380d026d-b5cf-4eb6-9131-0a9dcc739a15}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de origen\Scene\Path">
+      <UniqueIdentifier>{44a2989f-c30c-4ebe-87f1-f78698240bf1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de origen\Scene\Grid">
+      <UniqueIdentifier>{f0d7f044-2d89-4c56-9861-50104e3f72f0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de origen\Units">
+      <UniqueIdentifier>{6f3fa8a1-99a6-4d7b-94d4-d872656ef137}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de encabezado\Units">
+      <UniqueIdentifier>{2a6f99b2-b4cc-4c08-b703-c51381372e0d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de encabezado\Units\Boid">
+      <UniqueIdentifier>{38480934-1291-444a-b32b-cc7557bc3ceb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de origen\Units\Boid">
+      <UniqueIdentifier>{cb444e7b-2593-4466-b738-e844575920ce}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de origen\Units\Pathfinding">
+      <UniqueIdentifier>{3bbcd893-3a9d-4eff-8053-c7f4fc527186}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de encabezado\Units\PathFinding">
+      <UniqueIdentifier>{fd2185d1-7b82-4aca-8873-f0abaab29745}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="EntryPoint.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
-    <ClCompile Include="AgentManager.cpp">
-      <Filter>Archivos de origen\Agents</Filter>
-    </ClCompile>
-    <ClCompile Include="Boid.cpp">
-      <Filter>Archivos de origen\Agents</Filter>
-    </ClCompile>
-    <ClCompile Include="CircleObstacle.cpp">
-      <Filter>Archivos de origen\Map</Filter>
-    </ClCompile>
     <ClCompile Include="Math.cpp">
       <Filter>Archivos de origen\Helpers</Filter>
-    </ClCompile>
-    <ClCompile Include="Obstacle.cpp">
-      <Filter>Archivos de origen\Map</Filter>
-    </ClCompile>
-    <ClCompile Include="Path.cpp">
-      <Filter>Archivos de origen\Map</Filter>
     </ClCompile>
     <ClCompile Include="Timer.cpp">
       <Filter>Archivos de origen\Helpers</Filter>
     </ClCompile>
-    <ClCompile Include="PathNode.cpp">
-      <Filter>Archivos de origen\Map</Filter>
-    </ClCompile>
     <ClCompile Include="Vector2.cpp">
       <Filter>Archivos de origen\Helpers</Filter>
-    </ClCompile>
-    <ClCompile Include="World.cpp">
-      <Filter>Archivos de origen\Map</Filter>
     </ClCompile>
     <ClCompile Include="NodePlacer.cpp">
       <Filter>Archivos de origen\Helpers</Filter>
     </ClCompile>
-    <ClCompile Include="FSM.cpp">
-      <Filter>Archivos de origen</Filter>
-    </ClCompile>
     <ClCompile Include="BoidState.cpp">
-      <Filter>Archivos de origen</Filter>
-    </ClCompile>
-    <ClCompile Include="RunState.cpp">
-      <Filter>Archivos de origen</Filter>
+      <Filter>Archivos de origen\FSM</Filter>
     </ClCompile>
     <ClCompile Include="EndState.cpp">
+      <Filter>Archivos de origen\FSM</Filter>
+    </ClCompile>
+    <ClCompile Include="FSM.cpp">
+      <Filter>Archivos de origen\FSM</Filter>
+    </ClCompile>
+    <ClCompile Include="RunState.cpp">
+      <Filter>Archivos de origen\FSM</Filter>
+    </ClCompile>
+    <ClCompile Include="CircleObstacle.cpp">
+      <Filter>Archivos de origen\Scene\Obstacles</Filter>
+    </ClCompile>
+    <ClCompile Include="Obstacle.cpp">
+      <Filter>Archivos de origen\Scene\Obstacles</Filter>
+    </ClCompile>
+    <ClCompile Include="Path.cpp">
+      <Filter>Archivos de origen\Scene\Path</Filter>
+    </ClCompile>
+    <ClCompile Include="PathNode.cpp">
+      <Filter>Archivos de origen\Scene\Path</Filter>
+    </ClCompile>
+    <ClCompile Include="Grid.cpp">
+      <Filter>Archivos de origen\Scene\Grid</Filter>
+    </ClCompile>
+    <ClCompile Include="GridNode.cpp">
+      <Filter>Archivos de origen\Scene\Grid</Filter>
+    </ClCompile>
+    <ClCompile Include="World.cpp">
       <Filter>Archivos de origen</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene.cpp">
+      <Filter>Archivos de origen\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="UserInterface.cpp">
+      <Filter>Archivos de origen\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="GridMakerUI.cpp">
+      <Filter>Archivos de origen\UI\Menu</Filter>
+    </ClCompile>
+    <ClCompile Include="PathFinding.cpp">
+      <Filter>Archivos de origen\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Button.cpp">
+      <Filter>Archivos de origen\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="AgentManager.cpp">
+      <Filter>Archivos de origen\Units\Boid</Filter>
+    </ClCompile>
+    <ClCompile Include="Boid.cpp">
+      <Filter>Archivos de origen\Units\Boid</Filter>
+    </ClCompile>
+    <ClCompile Include="Walker.cpp">
+      <Filter>Archivos de origen\Units\Pathfinding</Filter>
+    </ClCompile>
+    <ClCompile Include="WalkerDepthFS.cpp">
+      <Filter>Archivos de origen\Units\Pathfinding</Filter>
+    </ClCompile>
+    <ClCompile Include="WalkerBestFS.cpp">
+      <Filter>Archivos de origen\Units\Pathfinding</Filter>
+    </ClCompile>
+    <ClCompile Include="WalkerBreadthFS.cpp">
+      <Filter>Archivos de origen\Units\Pathfinding</Filter>
+    </ClCompile>
+    <ClCompile Include="WalkerDijkstra.cpp">
+      <Filter>Archivos de origen\Units\Pathfinding</Filter>
+    </ClCompile>
+    <ClCompile Include="WalkerAStar.cpp">
+      <Filter>Archivos de origen\Units\Pathfinding</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Headers.h">
       <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
-    <ClInclude Include="AgentManager.h">
-      <Filter>Archivos de encabezado\Agents</Filter>
-    </ClInclude>
-    <ClInclude Include="Boid.h">
-      <Filter>Archivos de encabezado\Agents</Filter>
-    </ClInclude>
-    <ClInclude Include="CircleObstacle.h">
-      <Filter>Archivos de encabezado\Map</Filter>
-    </ClInclude>
-    <ClInclude Include="Path.h">
-      <Filter>Archivos de encabezado\Map</Filter>
-    </ClInclude>
-    <ClInclude Include="PathNode.h">
-      <Filter>Archivos de encabezado\Map</Filter>
-    </ClInclude>
-    <ClInclude Include="Obstacle.h">
-      <Filter>Archivos de encabezado\Map</Filter>
-    </ClInclude>
-    <ClInclude Include="World.h">
-      <Filter>Archivos de encabezado\Map</Filter>
     </ClInclude>
     <ClInclude Include="Timer.h">
       <Filter>Archivos de encabezado\Helpers</Filter>
@@ -119,17 +185,77 @@
     <ClInclude Include="NodePlacer.h">
       <Filter>Archivos de encabezado\Helpers</Filter>
     </ClInclude>
-    <ClInclude Include="FSM.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
     <ClInclude Include="BoidState.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
-    <ClInclude Include="RunState.h">
-      <Filter>Archivos de encabezado</Filter>
+      <Filter>Archivos de encabezado\FSM</Filter>
     </ClInclude>
     <ClInclude Include="EndState.h">
+      <Filter>Archivos de encabezado\FSM</Filter>
+    </ClInclude>
+    <ClInclude Include="FSM.h">
+      <Filter>Archivos de encabezado\FSM</Filter>
+    </ClInclude>
+    <ClInclude Include="RunState.h">
+      <Filter>Archivos de encabezado\FSM</Filter>
+    </ClInclude>
+    <ClInclude Include="CircleObstacle.h">
+      <Filter>Archivos de encabezado\Scene\Obstacles</Filter>
+    </ClInclude>
+    <ClInclude Include="Obstacle.h">
+      <Filter>Archivos de encabezado\Scene\Obstacles</Filter>
+    </ClInclude>
+    <ClInclude Include="Path.h">
+      <Filter>Archivos de encabezado\Scene\Path</Filter>
+    </ClInclude>
+    <ClInclude Include="PathNode.h">
+      <Filter>Archivos de encabezado\Scene\Path</Filter>
+    </ClInclude>
+    <ClInclude Include="Grid.h">
+      <Filter>Archivos de encabezado\Scene\Grid</Filter>
+    </ClInclude>
+    <ClInclude Include="GridNode.h">
+      <Filter>Archivos de encabezado\Scene\Grid</Filter>
+    </ClInclude>
+    <ClInclude Include="World.h">
       <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene.h">
+      <Filter>Archivos de encabezado\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="UserInterface.h">
+      <Filter>Archivos de encabezado\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="GridMakerUI.h">
+      <Filter>Archivos de encabezado\UI\Menu</Filter>
+    </ClInclude>
+    <ClInclude Include="PathFinding.h">
+      <Filter>Archivos de encabezado\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Button.h">
+      <Filter>Archivos de encabezado\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="AgentManager.h">
+      <Filter>Archivos de encabezado\Units\Boid</Filter>
+    </ClInclude>
+    <ClInclude Include="Boid.h">
+      <Filter>Archivos de encabezado\Units\Boid</Filter>
+    </ClInclude>
+    <ClInclude Include="Walker.h">
+      <Filter>Archivos de encabezado\Units\PathFinding</Filter>
+    </ClInclude>
+    <ClInclude Include="WalkerDepthFS.h">
+      <Filter>Archivos de encabezado\Units\PathFinding</Filter>
+    </ClInclude>
+    <ClInclude Include="WalkerBestFS.h">
+      <Filter>Archivos de encabezado\Units\PathFinding</Filter>
+    </ClInclude>
+    <ClInclude Include="WalkerBreadthFS.h">
+      <Filter>Archivos de encabezado\Units\PathFinding</Filter>
+    </ClInclude>
+    <ClInclude Include="WalkerDijkstra.h">
+      <Filter>Archivos de encabezado\Units\PathFinding</Filter>
+    </ClInclude>
+    <ClInclude Include="WalkerAStar.h">
+      <Filter>Archivos de encabezado\Units\PathFinding</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
